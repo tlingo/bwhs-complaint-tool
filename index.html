@@ -26,9 +26,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 label{display:block;font-size:11px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
 label .opt{color:#999;font-weight:400;text-transform:none;letter-spacing:0;font-size:11px}
 label .req{color:#c0392b}
-input,textarea,select{width:100%;padding:9px 12px;border:1.5px solid #dde1e9;border-radius:6px;font-size:14px;font-family:inherit;color:#1a1a2e;background:#fafbfc;outline:none;transition:border .15s}
+input,textarea,select{width:100%;padding:9px 12px;border:1.5px solid #dde1e9;border-radius:6px;font-size:14px;font-family:inherit;color:#1a1a2e;background:#fafbfc;outline:none;transition:border .15s,background .15s}
 input[type=date]{font-family:inherit}
 input:focus,textarea:focus,select:focus{border-color:#1a1a2e;background:white}
+input.err,textarea.err,select.err{border-color:#c0392b!important;background:#fff5f5!important}
+.err-msg{color:#c0392b;font-size:11px;font-weight:600;margin-top:4px;display:none}
+.err-msg.show{display:block}
 textarea{resize:vertical;min-height:85px}
 .toggle-wrap{display:flex;gap:0;border:1.5px solid #dde1e9;border-radius:6px;overflow:hidden;width:fit-content;margin-top:4px}
 .toggle-wrap input[type=radio]{display:none}
@@ -123,17 +126,17 @@ textarea{resize:vertical;min-height:85px}
   <div class="ch"><span class="n">1</span> Your Family Information</div>
   <div class="cb">
     <div class="row">
-      <div class="f"><label>Parent / Guardian 1 &mdash; Full Name <span class="req">*</span></label><input id="p1" placeholder="Sarah Johnson"></div>
-      <div class="f"><label>Parent / Guardian 2 <span class="opt">(if filing jointly)</span></label><input id="p2" placeholder="Michael Johnson"></div>
+      <div class="f"><label>Parent / Guardian 1 &mdash; Full Name <span class="req">*</span></label><input id="p1" autocomplete="name" placeholder="Full name"><span class="err-msg" id="p1-err"></span></div>
+      <div class="f"><label>Parent / Guardian 2 <span class="opt">(if filing jointly)</span></label><input id="p2" autocomplete="off" placeholder="Full name (optional)"></div>
     </div>
-    <div class="f"><label>Home Address <span class="req">*</span></label><input id="addr" placeholder="123 Main Street, Bentonville, AR 72712"></div>
+    <div class="f"><label>Home Address <span class="req">*</span></label><input id="addr" autocomplete="street-address" placeholder="Street address, City, State ZIP"><span class="err-msg" id="addr-err"></span></div>
     <div class="row">
-      <div class="f"><label>Parent 1 Phone <span class="req">*</span></label><input id="p1ph" placeholder="479-555-0100"></div>
-      <div class="f"><label>Parent 1 Email <span class="req">*</span></label><input id="p1em" type="email" placeholder="you@email.com"></div>
+      <div class="f"><label>Parent 1 Phone <span class="req">*</span></label><input id="p1ph" autocomplete="tel" placeholder="Phone number"><span class="err-msg" id="p1ph-err"></span></div>
+      <div class="f"><label>Parent 1 Email <span class="req">*</span></label><input id="p1em" type="email" autocomplete="email" placeholder="Email address"><span class="err-msg" id="p1em-err"></span></div>
     </div>
     <div class="row">
-      <div class="f"><label>Parent 2 Phone <span class="opt">(optional)</span></label><input id="p2ph" placeholder="479-555-0101"></div>
-      <div class="f"><label>Parent 2 Email <span class="opt">(optional)</span></label><input id="p2em" type="email" placeholder="you@email.com"></div>
+      <div class="f"><label>Parent 2 Phone <span class="opt">(optional)</span></label><input id="p2ph" autocomplete="off" placeholder="Phone number"></div>
+      <div class="f"><label>Parent 2 Email <span class="opt">(optional)</span></label><input id="p2em" type="email" autocomplete="off" placeholder="Email address"></div>
     </div>
   </div>
 </div>
@@ -143,25 +146,26 @@ textarea{resize:vertical;min-height:85px}
   <div class="ch"><span class="n">2</span> About Your Student</div>
   <div class="cb">
     <div class="row">
-      <div class="f"><label>Student Full Name <span class="req">*</span></label><input id="sn" placeholder="Jordan Johnson"></div>
-      <div class="f"><label>Age</label><input id="sa" placeholder="17"></div>
+      <div class="f"><label>Student Full Name <span class="req">*</span></label><input id="sn" placeholder="Student's full name"><span class="err-msg" id="sn-err"></span></div>
+      <div class="f"><label>Age</label><input id="sa" placeholder="Age"></div>
       <div class="f"><label>Year / Status <span class="req">*</span></label>
         <select id="sy">
           <option value="">-- Select --</option>
           <option>Freshman</option><option>Sophomore</option><option>Junior</option><option>Senior</option>
           <option>Alumni (graduated)</option><option>Left program before graduating</option>
         </select>
+        <span class="err-msg" id="sy-err"></span>
       </div>
     </div>
     <div class="row">
-      <div class="f"><label>Events Competed In <span class="req">*</span></label><input id="sev" placeholder="e.g. Pole Vault, Hurdles, Decathlon"></div>
-      <div class="f"><label>Years on BWHS Track</label><input id="syr" placeholder="e.g. 4 years (2022-2026)"></div>
+      <div class="f"><label>Events Competed In <span class="req">*</span></label><input id="sev" placeholder="e.g. Pole Vault, Sprints, Decathlon"><span class="err-msg" id="sev-err"></span></div>
+      <div class="f"><label>Years on BWHS Track</label><input id="syr" placeholder="e.g. 4 years (2022–2026)"></div>
     </div>
-    <div class="f"><label>Student Accomplishments <span class="opt">(personal records, honors, awards -- establishes credibility)</span></label>
-      <textarea id="sacc" placeholder="e.g. Honor Roll, 3-year varsity athlete, personal record of 13'6&quot; in pole vault, competed at district level..."></textarea>
+    <div class="f"><label>Student Accomplishments <span class="opt">(personal records, honors, awards — establishes credibility in the complaint)</span></label>
+      <textarea id="sacc" placeholder="Academic honors, varsity letters, personal records, awards, scholarship offers, or other achievements..."></textarea>
     </div>
     <div class="f"><label>Current Status <span class="opt">(still on team, left program, graduated, etc.)</span></label>
-      <input id="sst" placeholder="e.g. Left the program in March 2026 due to Coach Parish's conduct">
+      <input id="sst" placeholder="Whether your student is still on the team, left the program, or graduated">
     </div>
 
     <div class="f" style="margin-top:6px">
@@ -173,7 +177,7 @@ textarea{resize:vertical;min-height:85px}
     </div>
     <div id="outside-d" style="display:none">
       <div class="f"><label>Did Coach Parish treat your student differently because of it?</label>
-        <textarea id="outside-t" style="min-height:75px" placeholder="e.g. From the time our student began training with BCA Athletics, Coach Parish's treatment became increasingly hostile. He told the team not to train outside his program and began excluding our student from competitive opportunities..."></textarea>
+        <textarea id="outside-t" style="min-height:75px" placeholder="Describe how Coach Parish's treatment of your student changed after outside training began, and any statements he made about outside coaching..."></textarea>
       </div>
     </div>
 
@@ -186,7 +190,7 @@ textarea{resize:vertical;min-height:85px}
     </div>
     <div id="college-d" style="display:none">
       <div class="f"><label>Describe what happened and how you know <span class="opt">(include the college coach's name and institution if known)</span></label>
-        <textarea id="college-t" style="min-height:75px" placeholder="e.g. Coach Parish spoke to Matt Vining, his personal friend and assistant coach at Arkansas State University, and framed our student's outside training as a lack of loyalty. We learned this through our student's own conversation with Vining. No support or advocacy was provided by Parish during our student's recruiting process..."></textarea>
+        <textarea id="college-t" style="min-height:75px" placeholder="Describe what happened, which college coach was involved, and how you learned about it..."></textarea>
       </div>
     </div>
 
@@ -199,7 +203,7 @@ textarea{resize:vertical;min-height:85px}
     </div>
     <div id="therapy-d" style="display:none">
       <div class="f"><label>Counselor name / practice <span class="opt">(optional -- for documentation purposes only)</span></label>
-        <input id="therapy-t" placeholder="e.g. Dr. Jane Smith, Bentonville Family Counseling">
+        <input id="therapy-t" placeholder="Therapist or counselor name and practice (optional)">
       </div>
     </div>
   </div>
@@ -220,6 +224,7 @@ textarea{resize:vertical;min-height:85px}
   <div class="cb">
     <div class="f"><label>Describe the full impact <span class="req">*</span> <span class="opt">(behavioral changes, anxiety, academic effects, withdrawal from sport, statements your student made, effect on recruiting or scholarship opportunities)</span></label>
       <textarea id="imp" style="min-height:130px" placeholder="e.g. Our daughter began experiencing anxiety before every practice. She stopped sleeping well and told us she dreaded going because she never knew how Coach Parish would treat her. She is currently seeing a therapist who has documented the emotional impact. Her athletic development -- including preparation for her Division I college career -- has been seriously disrupted. The cumulative harm from years of targeted mistreatment is real, documented, and ongoing."></textarea>
+      <span class="err-msg" id="imp-err"></span>
     </div>
   </div>
 </div>
@@ -245,7 +250,7 @@ textarea{resize:vertical;min-height:85px}
     </div>
     <div id="prior-d" style="display:none;margin-top:12px">
       <div class="f"><label>Describe prior attempts <span class="opt">(who you contacted, when, what response you received or failed to receive)</span></label>
-        <textarea id="priort" placeholder="e.g. We submitted a written letter on January 28, 2026 to Principal Guthrie, Athletic Director Dillingham, and District Athletic Director Tipps. We followed up twice before receiving any response. A meeting took place February 26, 2026. We were told our concerns were taken seriously but received no written finding, no documented corrective action, and no apology. Nothing has changed."></textarea>
+        <textarea id="priort" placeholder="Who you contacted, when, what response you received, and what (if anything) changed as a result..."></textarea>
       </div>
     </div>
   </div>
@@ -411,9 +416,9 @@ function addInc() {
       '<div class="f"><label>Location</label><input id="i' + icid + 'l" placeholder="e.g. BWHS Track, Springdale District Meet"></div>' +
     '</div>' +
     '<div class="f"><label>What happened <span class="req">*</span> <span class="opt">(describe exactly -- use direct quotes where you remember them)</span></label>' +
-      '<textarea id="i' + icid + 'w" style="min-height:110px" placeholder="e.g. Coach Parish publicly accused our son of lying about his transportation to the meet. April Lingo had texted Parish in advance to say she was dropping them off, and Parish acknowledged receiving that text -- yet he confronted Dalton and Zarie in front of the team, called them liars, and threatened to scratch them from the meet. Other parents in the stands witnessed this."></textarea></div>' +
-    '<div class="f"><label>Immediate impact on student <span class="opt">(effect on your student during or right after this incident)</span></label>' +
-      '<textarea id="i' + icid + 'im" style="min-height:70px" placeholder="e.g. Visibly shaken, could not focus on the next event. Said afterward he felt humiliated in front of his teammates."></textarea></div>' +
+      '<textarea id="i' + icid + 'w" style="min-height:110px" placeholder="Describe what happened in as much detail as possible. Use direct quotes where you remember them. Include who was present."></textarea></div>' +
+    '<div class="f"><label>Immediate impact on student <span class="opt">(your student\'s reaction during or right after this incident)</span></label>' +
+      '<textarea id="i' + icid + 'im" style="min-height:70px" placeholder="How your student responded — visibly upset, unable to perform, statements they made, behavior changes observed..."></textarea></div>' +
     '<div class="wit-section">' +
       '<div class="wit-section-label">Witnesses to this incident</div>' +
       '<div id="iw' + icid + '-wrap"></div>' +
@@ -432,10 +437,10 @@ function addIncWit(icid) {
   d.innerHTML =
     '<button class="wit-rem" onclick="document.getElementById(\'iw' + wid + '\').remove()">Remove</button>' +
     '<div class="row" style="margin-bottom:8px">' +
-      '<div class="f"><label style="font-size:10px">Witness Name</label><input id="iw' + wid + 'n" placeholder="e.g. Coach King"></div>' +
-      '<div class="f"><label style="font-size:10px">Role / Relationship</label><input id="iw' + wid + 'r" placeholder="e.g. BWHS Assistant Coach, Parent in bleachers, Teammate"></div>' +
+      '<div class="f"><label style="font-size:10px">Witness Name</label><input id="iw' + wid + 'n" placeholder="Full name"></div>' +
+      '<div class="f"><label style="font-size:10px">Role / Relationship</label><input id="iw' + wid + 'r" placeholder="e.g. Parent, teammate, assistant coach, administrator"></div>' +
     '</div>' +
-    '<div class="f" style="margin-bottom:0"><label style="font-size:10px">Phone <span class="opt">(optional)</span></label><input id="iw' + wid + 'p" placeholder="479-555-0000"></div>';
+    '<div class="f" style="margin-bottom:0"><label style="font-size:10px">Phone <span class="opt">(optional)</span></label><input id="iw' + wid + 'p" placeholder="Phone number"></div>';
   wrap.appendChild(d);
 }
 
@@ -541,10 +546,55 @@ function generate() {
   const hasTherapy=gRadio('therapy')==='y';
   const therapyT=g('therapy-t');
 
-  if(!p1||!addr||!p1ph||!p1em||!sn||!sy||!sev){alert('Please complete all required fields (marked with *) before generating.');return;}
+  // ── VALIDATION ──────────────────────────────────────────────────
+  let firstErr=null;
+  function markErr(id,msg){
+    const el=document.getElementById(id);
+    if(!el) return;
+    el.classList.add('err');
+    el.addEventListener('input',()=>{el.classList.remove('err');const m=document.getElementById(id+'-err');if(m)m.classList.remove('show');},{once:true});
+    const existing=document.getElementById(id+'-err');
+    if(existing){existing.classList.add('show');existing.textContent=msg||'This field is required.';}
+    if(!firstErr) firstErr=el;
+  }
+  function clearErr(id){const el=document.getElementById(id);if(el)el.classList.remove('err');const m=document.getElementById(id+'-err');if(m)m.classList.remove('show');}
+
+  // Clear previous errors
+  document.querySelectorAll('.err').forEach(el=>el.classList.remove('err'));
+  document.querySelectorAll('.err-msg').forEach(el=>el.classList.remove('show'));
+  firstErr=null;
+
+  if(!p1) markErr('p1','Parent name is required.');
+  if(!addr) markErr('addr','Home address is required.');
+  if(!p1ph) markErr('p1ph','Phone number is required.');
+  if(!p1em) markErr('p1em','Email address is required.');
+  if(!sn) markErr('sn','Student name is required.');
+  if(!sy) markErr('sy','Please select a year / status.');
+  if(!sev) markErr('sev','Events are required.');
+  if(!imp) markErr('imp','Please describe the impact on your student.');
+
   const incs=getIncidents();
-  if(!incs.length){alert('Please add at least one incident before generating.');return;}
-  if(!imp){alert('Please describe the overall impact on your student (Section 4) before generating.');return;}
+  if(!incs.length){
+    const wrap=document.getElementById('inc-wrap');
+    wrap.style.outline='2px solid #c0392b';
+    wrap.style.borderRadius='6px';
+    if(!firstErr) firstErr=document.querySelector('.add-btn');
+    // auto-add first incident block so they can fill it in
+    if(document.querySelectorAll('.iblock').length===0) addInc();
+  }
+
+  // Validate each incident's required fields
+  document.querySelectorAll('#inc-wrap .iblock').forEach(block=>{
+    const id=block.id.replace('i','');
+    const what=document.getElementById('i'+id+'w');
+    if(what&&!what.value.trim()){what.classList.add('err');if(!firstErr)firstErr=what;}
+  });
+
+  if(firstErr){
+    firstErr.scrollIntoView({behavior:'smooth',block:'center'});
+    firstErr.focus();
+    return;
+  }
 
   const supportWits=getSupportingWitnesses();
 
