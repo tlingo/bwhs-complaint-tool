@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BWHS Track — Complaint Generator</title>
+<title>BWHS Track - Complaint Generator</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f0f2f7;color:#1a1a2e;font-size:15px;line-height:1.6}
@@ -107,7 +107,7 @@ textarea{resize:vertical;min-height:85px}
 <body>
 
 <div class="header">
-  <div class="header-banner">BWHS Track &amp; Field Parent Coalition &mdash; Coordinated Legal Action</div>
+  <div class="header-banner">BWHS Track &amp; Field Parent Coalition - Coordinated Legal Action</div>
   <div class="header-main">
     <h1>Complaint Document Generator</h1>
     <div class="sub">Coach BJ Parish / BWHS &nbsp;&middot;&nbsp; Generates District Complaint + PLSB Ethics Complaint &nbsp;&middot;&nbsp; Auto-detects applicable violations</div>
@@ -118,7 +118,7 @@ textarea{resize:vertical;min-height:85px}
 
 <div class="notice">
   <strong>Before You Begin</strong>
-  Fill out every section as completely as possible. Be specific &mdash; exact dates, exact words used, who witnessed each incident. When you click <strong>Generate</strong>, the tool will automatically identify which ethical standards and laws were violated based on your descriptions and include them in both complaint letters. Print, sign, and file same day.
+  Fill out every section as completely as possible. Be specific - exact dates, exact words used, who witnessed each incident. When you click <strong>Generate</strong>, the tool will automatically identify which ethical standards and laws were violated based on your descriptions and include them in both complaint letters. Print, sign, and file same day.
 </div>
 
 <!-- 1. FAMILY INFO -->
@@ -126,7 +126,7 @@ textarea{resize:vertical;min-height:85px}
   <div class="ch"><span class="n">1</span> Your Family Information</div>
   <div class="cb">
     <div class="row">
-      <div class="f"><label>Parent / Guardian 1 &mdash; Full Name <span class="req">*</span></label><input id="p1" autocomplete="name" placeholder="Full name"><span class="err-msg" id="p1-err"></span></div>
+      <div class="f"><label>Parent / Guardian 1 - Full Name <span class="req">*</span></label><input id="p1" autocomplete="name" placeholder="Full name"><span class="err-msg" id="p1-err"></span></div>
       <div class="f"><label>Parent / Guardian 2 <span class="opt">(if filing jointly)</span></label><input id="p2" autocomplete="off" placeholder="Full name (optional)"></div>
     </div>
     <div class="f"><label>Home Address <span class="req">*</span></label><input id="addr" autocomplete="street-address" placeholder="Street address, City, State ZIP"><span class="err-msg" id="addr-err"></span></div>
@@ -159,9 +159,9 @@ textarea{resize:vertical;min-height:85px}
     </div>
     <div class="row">
       <div class="f"><label>Events Competed In <span class="req">*</span></label><input id="sev" placeholder="e.g. Pole Vault, Sprints, Decathlon"><span class="err-msg" id="sev-err"></span></div>
-      <div class="f"><label>Years on BWHS Track</label><input id="syr" placeholder="e.g. 4 years (2022–2026)"></div>
+      <div class="f"><label>Years on BWHS Track</label><input id="syr" placeholder="e.g. 4 years (2022-2026)"></div>
     </div>
-    <div class="f"><label>Student Accomplishments <span class="opt">(personal records, honors, awards — establishes credibility in the complaint)</span></label>
+    <div class="f"><label>Student Accomplishments <span class="opt">(personal records, honors, awards - establishes credibility in the complaint)</span></label>
       <textarea id="sacc" placeholder="Academic honors, varsity letters, personal records, awards, scholarship offers, or other achievements..."></textarea>
     </div>
     <div class="f"><label>Current Status <span class="opt">(still on team, left program, graduated, etc.)</span></label>
@@ -418,7 +418,7 @@ function addInc() {
     '<div class="f"><label>What happened <span class="req">*</span> <span class="opt">(describe exactly -- use direct quotes where you remember them)</span></label>' +
       '<textarea id="i' + icid + 'w" style="min-height:110px" placeholder="Describe what happened in as much detail as possible. Use direct quotes where you remember them. Include who was present."></textarea></div>' +
     '<div class="f"><label>Immediate impact on student <span class="opt">(your student\'s reaction during or right after this incident)</span></label>' +
-      '<textarea id="i' + icid + 'im" style="min-height:70px" placeholder="How your student responded — visibly upset, unable to perform, statements they made, behavior changes observed..."></textarea></div>' +
+      '<textarea id="i' + icid + 'im" style="min-height:70px" placeholder="How your student responded - visibly upset, unable to perform, statements they made, behavior changes observed..."></textarea></div>' +
     '<div class="wit-section">' +
       '<div class="wit-section-label">Witnesses to this incident</div>' +
       '<div id="iw' + icid + '-wrap"></div>' +
