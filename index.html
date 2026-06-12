@@ -107,10 +107,10 @@ textarea{resize:vertical;min-height:85px}
 <body>
 
 <div class="header">
-  <div class="header-banner">BWHS Track &amp; Field Parent Coalition - Coordinated Legal Action</div>
+  <div class="header-banner">BWHS Track &amp; Field Parent &amp; Athlete Coalition - Coordinated Legal Action</div>
   <div class="header-main">
     <h1>Complaint Document Generator</h1>
-    <div class="sub">Coach BJ Parish / BWHS &nbsp;&middot;&nbsp; Generates District Complaint + PLSB Ethics Complaint &nbsp;&middot;&nbsp; Auto-detects applicable violations</div>
+    <div class="sub">Coach BJ Parish / BWHS &nbsp;&middot;&nbsp; For parents AND directly affected student-athletes &nbsp;&middot;&nbsp; Generates District Complaint + PLSB Ethics Complaint</div>
   </div>
 </div>
 
@@ -121,32 +121,61 @@ textarea{resize:vertical;min-height:85px}
   Fill out every section as completely as possible. Be specific - exact dates, exact words used, who witnessed each incident. When you click <strong>Generate</strong>, the tool will automatically identify which ethical standards and laws were violated based on your descriptions and include them in both complaint letters. Print, sign, and file same day.
 </div>
 
-<!-- 1. FAMILY INFO -->
+<!-- 1. WHO IS FILING + CONTACT INFO -->
 <div class="card">
-  <div class="ch"><span class="n">1</span> Your Family Information</div>
+  <div class="ch"><span class="n">1</span> <span id="sec1-title">Who Is Filing &amp; Contact Information</span></div>
   <div class="cb">
+    <div class="f">
+      <label>Who is filling out this complaint? <span class="req">*</span></label>
+      <div class="toggle-wrap">
+        <input type="radio" name="filer" id="filer-p" value="p" checked><label for="filer-p">Parent / Guardian</label>
+        <input type="radio" name="filer" id="filer-s" value="s"><label for="filer-s">Student-Athlete (filing for myself)</label>
+      </div>
+    </div>
+    <div class="notice" id="student-notice" style="display:none;margin:0 0 14px">
+      <strong>Your voice counts</strong>
+      You experienced this directly, and you have the right to put it on the record in your own words. If you are 18 or older you can sign and file this yourself. If you are under 18, a parent or guardian must co-sign before it is filed - the tool will add their signature line for you.
+    </div>
     <div class="row">
-      <div class="f"><label>Parent / Guardian 1 - Full Name <span class="req">*</span></label><input id="p1" autocomplete="name" placeholder="Full name"><span class="err-msg" id="p1-err"></span></div>
-      <div class="f"><label>Parent / Guardian 2 <span class="opt">(if filing jointly)</span></label><input id="p2" autocomplete="off" placeholder="Full name (optional)"></div>
+      <div class="f"><label><span id="p1-label">Parent / Guardian 1 - Full Name</span> <span class="req">*</span></label><input id="p1" autocomplete="name" placeholder="Full name"><span class="err-msg" id="p1-err"></span></div>
+      <div class="f" id="p2-wrap"><label>Parent / Guardian 2 <span class="opt">(if filing jointly)</span></label><input id="p2" autocomplete="off" placeholder="Full name (optional)"></div>
     </div>
     <div class="f"><label>Home Address <span class="req">*</span></label><input id="addr" autocomplete="street-address" placeholder="Street address, City, State ZIP"><span class="err-msg" id="addr-err"></span></div>
     <div class="row">
-      <div class="f"><label>Parent 1 Phone <span class="req">*</span></label><input id="p1ph" autocomplete="tel" placeholder="Phone number"><span class="err-msg" id="p1ph-err"></span></div>
-      <div class="f"><label>Parent 1 Email <span class="req">*</span></label><input id="p1em" type="email" autocomplete="email" placeholder="Email address"><span class="err-msg" id="p1em-err"></span></div>
+      <div class="f"><label><span id="p1ph-label">Parent 1 Phone</span> <span class="req">*</span></label><input id="p1ph" autocomplete="tel" placeholder="Phone number"><span class="err-msg" id="p1ph-err"></span></div>
+      <div class="f"><label><span id="p1em-label">Parent 1 Email</span> <span class="req">*</span></label><input id="p1em" type="email" autocomplete="email" placeholder="Email address"><span class="err-msg" id="p1em-err"></span></div>
     </div>
-    <div class="row">
+    <div class="row" id="p2-row">
       <div class="f"><label>Parent 2 Phone <span class="opt">(optional)</span></label><input id="p2ph" autocomplete="off" placeholder="Phone number"></div>
       <div class="f"><label>Parent 2 Email <span class="opt">(optional)</span></label><input id="p2em" type="email" autocomplete="off" placeholder="Email address"></div>
+    </div>
+    <div id="student-extra" style="display:none">
+      <div class="f" style="margin-top:6px">
+        <label>Are you 18 or older? <span class="req">*</span></label>
+        <div class="toggle-wrap">
+          <input type="radio" name="adult" id="ad-yes" value="y" checked><label for="ad-yes">Yes - I am 18+</label>
+          <input type="radio" name="adult" id="ad-no" value="n"><label for="ad-no">No - I am under 18</label>
+        </div>
+      </div>
+      <div id="cosign-d" style="display:none">
+        <div class="row" style="margin-top:12px">
+          <div class="f"><label>Parent / Guardian Co-Signer - Full Name <span class="req">*</span></label><input id="cgn" placeholder="Parent or guardian full name"><span class="err-msg" id="cgn-err"></span></div>
+        </div>
+        <div class="row">
+          <div class="f"><label>Co-Signer Phone <span class="opt">(optional)</span></label><input id="cgph" placeholder="Phone number"></div>
+          <div class="f"><label>Co-Signer Email <span class="opt">(optional)</span></label><input id="cgem" type="email" placeholder="Email address"></div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 <!-- 2. STUDENT -->
 <div class="card">
-  <div class="ch"><span class="n">2</span> About Your Student</div>
+  <div class="ch"><span class="n">2</span> <span id="sec2-title">About Your Student</span></div>
   <div class="cb">
     <div class="row">
-      <div class="f"><label>Student Full Name <span class="req">*</span></label><input id="sn" placeholder="Student's full name"><span class="err-msg" id="sn-err"></span></div>
+      <div class="f" id="sn-wrap"><label>Student Full Name <span class="req">*</span></label><input id="sn" placeholder="Student's full name"><span class="err-msg" id="sn-err"></span></div>
       <div class="f"><label>Age</label><input id="sa" placeholder="Age"></div>
       <div class="f"><label>Year / Status <span class="req">*</span></label>
         <select id="sy">
@@ -161,7 +190,7 @@ textarea{resize:vertical;min-height:85px}
       <div class="f"><label>Events Competed In <span class="req">*</span></label><input id="sev" placeholder="e.g. Pole Vault, Sprints, Decathlon"><span class="err-msg" id="sev-err"></span></div>
       <div class="f"><label>Years on BWHS Track</label><input id="syr" placeholder="e.g. 4 years (2022-2026)"></div>
     </div>
-    <div class="f"><label>Student Accomplishments <span class="opt">(personal records, honors, awards - establishes credibility in the complaint)</span></label>
+    <div class="f"><label><span id="sacc-label">Student Accomplishments</span> <span class="opt">(personal records, honors, awards - establishes credibility in the complaint)</span></label>
       <textarea id="sacc" placeholder="Academic honors, varsity letters, personal records, awards, scholarship offers, or other achievements..."></textarea>
     </div>
     <div class="f"><label>Current Status <span class="opt">(still on team, left program, graduated, etc.)</span></label>
@@ -169,20 +198,20 @@ textarea{resize:vertical;min-height:85px}
     </div>
 
     <div class="f" style="margin-top:6px">
-      <label>Did your student receive outside coaching or training? <span class="opt">(club, private coach, BCA Athletics, etc.)</span></label>
+      <label><span id="qa-outside">Did your student receive outside coaching or training?</span> <span class="opt">(club, private coach, BCA Athletics, etc.)</span></label>
       <div class="toggle-wrap">
         <input type="radio" name="outside" id="out-no" value="n" checked><label for="out-no">No</label>
         <input type="radio" name="outside" id="out-yes" value="y"><label for="out-yes">Yes</label>
       </div>
     </div>
     <div id="outside-d" style="display:none">
-      <div class="f"><label>Did Coach Parish treat your student differently because of it?</label>
-        <textarea id="outside-t" style="min-height:75px" placeholder="Describe how Coach Parish's treatment of your student changed after outside training began, and any statements he made about outside coaching..."></textarea>
+      <div class="f"><label><span id="qa-outside2">Did Coach Parish treat your student differently because of it?</span></label>
+        <textarea id="outside-t" style="min-height:75px" placeholder="Describe how Coach Parish's treatment changed after outside training began, and any statements he made about outside coaching..."></textarea>
       </div>
     </div>
 
     <div class="f" style="margin-top:6px">
-      <label>Did Coach Parish contact any college coaches about your student?</label>
+      <label><span id="qa-college">Did Coach Parish contact any college coaches about your student?</span></label>
       <div class="toggle-wrap">
         <input type="radio" name="college" id="col-no" value="n" checked><label for="col-no">No</label>
         <input type="radio" name="college" id="col-yes" value="y"><label for="col-yes">Yes</label>
@@ -195,7 +224,7 @@ textarea{resize:vertical;min-height:85px}
     </div>
 
     <div class="f" style="margin-top:6px">
-      <label>Is your student currently in therapy or counseling as a result of this?</label>
+      <label><span id="qa-therapy">Is your student currently in therapy or counseling as a result of this?</span></label>
       <div class="toggle-wrap">
         <input type="radio" name="therapy" id="th-no" value="n" checked><label for="th-no">No</label>
         <input type="radio" name="therapy" id="th-yes" value="y"><label for="th-yes">Yes</label>
@@ -220,9 +249,9 @@ textarea{resize:vertical;min-height:85px}
 
 <!-- 4. IMPACT -->
 <div class="card">
-  <div class="ch"><span class="n">4</span> Overall Impact on Your Student</div>
+  <div class="ch"><span class="n">4</span> <span id="sec4-title">Overall Impact on Your Student</span></div>
   <div class="cb">
-    <div class="f"><label>Describe the full impact <span class="req">*</span> <span class="opt">(behavioral changes, anxiety, academic effects, withdrawal from sport, statements your student made, effect on recruiting or scholarship opportunities)</span></label>
+    <div class="f"><label>Describe the full impact <span class="req">*</span> <span class="opt" id="imp-opt">(behavioral changes, anxiety, academic effects, withdrawal from sport, statements your student made, effect on recruiting or scholarship opportunities)</span></label>
       <textarea id="imp" style="min-height:130px" placeholder="e.g. Our daughter began experiencing anxiety before every practice. She stopped sleeping well and told us she dreaded going because she never knew how Coach Parish would treat her. She is currently seeing a therapist who has documented the emotional impact. Her athletic development -- including preparation for her Division I college career -- has been seriously disrupted. The cumulative harm from years of targeted mistreatment is real, documented, and ongoing."></textarea>
       <span class="err-msg" id="imp-err"></span>
     </div>
@@ -417,8 +446,8 @@ function addInc() {
     '</div>' +
     '<div class="f"><label>What happened <span class="req">*</span> <span class="opt">(describe exactly -- use direct quotes where you remember them)</span></label>' +
       '<textarea id="i' + icid + 'w" style="min-height:110px" placeholder="Describe what happened in as much detail as possible. Use direct quotes where you remember them. Include who was present."></textarea></div>' +
-    '<div class="f"><label>Immediate impact on student <span class="opt">(your student\'s reaction during or right after this incident)</span></label>' +
-      '<textarea id="i' + icid + 'im" style="min-height:70px" placeholder="How your student responded - visibly upset, unable to perform, statements they made, behavior changes observed..."></textarea></div>' +
+    '<div class="f"><label><span class="inc-imp-label">' + (isStudent() ? 'Immediate impact on you <span class="opt">(your reaction during or right after this incident)</span>' : 'Immediate impact on student <span class="opt">(your student\'s reaction during or right after this incident)</span>') + '</span></label>' +
+      '<textarea id="i' + icid + 'im" style="min-height:70px" placeholder="' + (isStudent() ? 'How you responded - how it felt, what you said or did, how it affected your performance...' : 'How your student responded - visibly upset, unable to perform, statements they made, behavior changes observed...') + '"></textarea></div>' +
     '<div class="wit-section">' +
       '<div class="wit-section-label">Witnesses to this incident</div>' +
       '<div id="iw' + icid + '-wrap"></div>' +
@@ -522,20 +551,58 @@ function getSupportingWitnesses() {
   return out;
 }
 
-function sigBlock(p1,p2,p1ph,p1em,p2ph,p2em,addr) {
-  return '<div class="sig"><p>Sincerely,</p><br>' +
-    '<div class="sl"><div class="su"></div><span class="sd">Date: _______________</span></div>' +
-    '<p>'+esc(p1)+'</p><br>' +
-    (p2 ? '<div class="sl"><div class="su"></div><span class="sd">Date: _______________</span></div><p>'+esc(p2)+'</p><br>' : '') +
-    '<p>'+esc(p1ph)+' | '+esc(p1em)+'</p>' +
-    (p2&&p2ph ? '<p>'+esc(p2ph)+' | '+esc(p2em)+'</p>' : '') +
-    '<p>'+esc(addr)+'</p></div>';
+function sigBlock(signers, contactLines, addr) {
+  let h = '<div class="sig"><p>Sincerely,</p><br>';
+  signers.forEach(s => {
+    if (!s) return;
+    h += '<div class="sl"><div class="su"></div><span class="sd">Date: _______________</span></div>' +
+         '<p>'+esc(s.name)+(s.role?' -- '+esc(s.role):'')+'</p><br>';
+  });
+  contactLines.forEach(c => { if (c) h += '<p>'+esc(c)+'</p>'; });
+  h += '<p>'+esc(addr)+'</p></div>';
+  return h;
+}
+
+// ── FILER MODE (parent vs student-athlete) ──────────────────────
+const isStudent = () => gRadio('filer') === 's';
+
+function applyFilerMode() {
+  const s = isStudent();
+  const set = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
+  document.getElementById('student-notice').style.display = s ? 'block' : 'none';
+  document.getElementById('student-extra').style.display = s ? 'block' : 'none';
+  document.getElementById('p2-wrap').style.display = s ? 'none' : 'block';
+  document.getElementById('p2-row').style.display = s ? 'none' : 'flex';
+  document.getElementById('sn-wrap').style.display = s ? 'none' : 'block';
+  document.getElementById('cosign-d').style.display = (s && gRadio('adult')==='n') ? 'block' : 'none';
+  set('sec1-title', s ? 'Your Information' : 'Who Is Filing & Contact Information');
+  set('p1-label', s ? 'Your Full Name' : 'Parent / Guardian 1 - Full Name');
+  set('p1ph-label', s ? 'Your Phone' : 'Parent 1 Phone');
+  set('p1em-label', s ? 'Your Email' : 'Parent 1 Email');
+  set('sec2-title', s ? 'About You & Your Time on the Team' : 'About Your Student');
+  set('sacc-label', s ? 'Your Accomplishments' : 'Student Accomplishments');
+  set('qa-outside', s ? 'Did you receive outside coaching or training?' : 'Did your student receive outside coaching or training?');
+  set('qa-outside2', s ? 'Did Coach Parish treat you differently because of it?' : 'Did Coach Parish treat your student differently because of it?');
+  set('qa-college', s ? 'Did Coach Parish contact any college coaches about you?' : 'Did Coach Parish contact any college coaches about your student?');
+  set('qa-therapy', s ? 'Are you currently in therapy or counseling as a result of this?' : 'Is your student currently in therapy or counseling as a result of this?');
+  set('sec4-title', s ? 'Overall Impact on You' : 'Overall Impact on Your Student');
+  set('imp-opt', s ? '(how this affected you - anxiety, dreading practice, effects on school, leaving the sport, effects on your recruiting or scholarship opportunities. Your own words carry the most weight.)' : '(behavioral changes, anxiety, academic effects, withdrawal from sport, statements your student made, effect on recruiting or scholarship opportunities)');
+  const imp = document.getElementById('imp');
+  if (imp) {
+    if (!imp.dataset.pph) imp.dataset.pph = imp.placeholder;
+    imp.placeholder = s
+      ? 'e.g. I started dreading practice because I never knew how Coach Parish would treat me that day. I stopped sleeping well before meets. I considered quitting the sport I love. My recruiting conversations were affected by things he said about me...'
+      : imp.dataset.pph;
+  }
 }
 
 // ── MAIN GENERATE ───────────────────────────────────────────────
 function generate() {
-  const p1=g('p1'),p2=g('p2'),addr=g('addr'),p1ph=g('p1ph'),p1em=g('p1em'),p2ph=g('p2ph'),p2em=g('p2em');
-  const sn=g('sn'),sa=g('sa'),sy=g('sy'),sev=g('sev'),syr=g('syr'),sacc=g('sacc'),sst=g('sst');
+  const student=isStudent();
+  const minor=student && gRadio('adult')==='n';
+  const cgn=g('cgn'),cgph=g('cgph'),cgem=g('cgem');
+  const p1=g('p1'),p2=student?'':g('p2'),addr=g('addr'),p1ph=g('p1ph'),p1em=g('p1em'),p2ph=student?'':g('p2ph'),p2em=student?'':g('p2em');
+  const sn=student?g('p1'):g('sn'),sa=g('sa'),sy=g('sy'),sev=g('sev'),syr=g('syr'),sacc=g('sacc'),sst=g('sst');
   const imp=g('imp');
   const hasPrior=gRadio('prior')==='y';
   const priort=g('priort');
@@ -564,14 +631,15 @@ function generate() {
   document.querySelectorAll('.err-msg').forEach(el=>el.classList.remove('show'));
   firstErr=null;
 
-  if(!p1) markErr('p1','Parent name is required.');
+  if(!p1) markErr('p1',student?'Your name is required.':'Parent name is required.');
   if(!addr) markErr('addr','Home address is required.');
   if(!p1ph) markErr('p1ph','Phone number is required.');
   if(!p1em) markErr('p1em','Email address is required.');
-  if(!sn) markErr('sn','Student name is required.');
+  if(!student && !sn) markErr('sn','Student name is required.');
+  if(minor && !cgn) markErr('cgn','A parent or guardian co-signer is required for students under 18.');
   if(!sy) markErr('sy','Please select a year / status.');
   if(!sev) markErr('sev','Events are required.');
-  if(!imp) markErr('imp','Please describe the impact on your student.');
+  if(!imp) markErr('imp',student?'Please describe the impact on you.':'Please describe the impact on your student.');
 
   const incs=getIncidents();
   if(!incs.length){
@@ -607,8 +675,21 @@ function generate() {
     +(hasTherapy?' therapy therapist counseling':'');
   const detected=detectViolations(allText);
 
-  const pnames=p2?esc(p1)+' and '+esc(p2):esc(p1);
-  const sig=sigBlock(p1,p2,p1ph,p1em,p2ph,p2em,addr);
+  const pnames=student?esc(sn)+(minor&&cgn?' (student-athlete), co-signed by '+esc(cgn)+' (parent/guardian)':' (student-athlete)'):(p2?esc(p1)+' and '+esc(p2):esc(p1));
+
+  // Voice tokens - parent ("we/our student") vs student first person ("I/me/my")
+  const ourStudent = student?'me':'our student';
+  const ourStudentPoss = student?'my':'our student\'s';
+  const OurAcct = student?'My':'Our';
+
+  // Signature block
+  const signers = student
+    ? [{name:sn, role:'Student-Athlete'}].concat(minor&&cgn?[{name:cgn, role:'Parent / Guardian (co-signing for student under 18)'}]:[])
+    : [{name:p1}].concat(p2?[{name:p2}]:[]);
+  const contactLines = student
+    ? [p1ph+' | '+p1em].concat((minor&&(cgph||cgem))?[[cgph,cgem].filter(Boolean).join(' | ')+' (parent/guardian)']:[])
+    : [p1ph+' | '+p1em].concat((p2&&p2ph)?[p2ph+' | '+p2em]:[]);
+  const sig=sigBlock(signers,contactLines,addr);
 
   // Build incident HTML
   let incHTML='';
@@ -661,7 +742,7 @@ function generate() {
   const collegePara=(hasCollege&&collegeT)?'<h4>Interference with College Recruiting</h4><p>'+nl(collegeT)+'</p>':'';
   // Therapy line
   const therapyLine=hasTherapy
-    ?'<p>'+esc(sn)+' is currently in therapy'+(therapyT?' ('+esc(therapyT)+')':'')+' to address the psychological impact of this experience. The emotional harm is real, documented, and ongoing.</p>'
+    ?'<p>'+(student?'I am':esc(sn)+' is')+' currently in therapy'+(therapyT?' ('+esc(therapyT)+')':'')+' to address the psychological impact of this experience. The emotional harm is real, documented, and ongoing.</p>'
     :'';
 
   // Concurrent filings
@@ -689,7 +770,9 @@ function generate() {
     '<p><strong>RE: Formal Complaint -- Sustained Misconduct by Coach Benjamin "BJ" Parish, Head Track &amp; Field Coach, BWHS; Request for Immediate Investigation and Removal from Coaching Position</strong></p>' +
     '<hr>' +
     '<p>Dear Dr. Guthrie, Mr. Dillingham, Mr. Tipps, Superintendent Bruick-Jones, and Members of the Bentonville School Board:</p>' +
-    '<p>We are the parents of '+esc(sn)+(sa?', age '+esc(sa):'')+', a '+esc(sy.toLowerCase())+' athlete competing in '+esc(sev)+(syr?' with '+esc(syr)+' on the BWHS track team':'')+'. We write to formally report a sustained, documented pattern of misconduct by Head Track Coach Benjamin "BJ" Parish that has caused measurable harm to our student and others under his supervision.</p>' +
+    (student
+      ? '<p>I am '+esc(sn)+(sa?', age '+esc(sa):'')+', a '+esc(sy.toLowerCase())+' athlete competing in '+esc(sev)+(syr?' with '+esc(syr)+' on the BWHS track team':'')+'. I am writing in my own words to formally report a sustained, documented pattern of misconduct by Head Track Coach Benjamin "BJ" Parish directed at me and at others under his supervision. I experienced this conduct directly.'+(minor&&cgn?' Because I am under 18, this complaint is co-signed by my parent/guardian, '+esc(cgn)+'.':'')+'</p>'
+      : '<p>We are the parents of '+esc(sn)+(sa?', age '+esc(sa):'')+', a '+esc(sy.toLowerCase())+' athlete competing in '+esc(sev)+(syr?' with '+esc(syr)+' on the BWHS track team':'')+'. We write to formally report a sustained, documented pattern of misconduct by Head Track Coach Benjamin "BJ" Parish that has caused measurable harm to our student and others under his supervision.</p>') +
     '<p><strong>Please be advised:</strong> Under Arkansas Code Annotated &sect; 6-18-514, when a principal receives a written complaint of bullying, the district is legally required to complete a formal investigation within <strong>five (5) school days</strong>. This letter constitutes a written bullying complaint. We expect written acknowledgment of receipt and the investigation timeline within 24 hours.</p>' +
 
     '<h3>I. Student Background</h3>' +
@@ -706,23 +789,23 @@ function generate() {
     (violHTML?'<h3>III. Violations of Applicable Law and Policy</h3><p>Based on the facts documented in this complaint, Coach Parish\'s conduct implicates the following ethical standards and legal provisions:</p>'+detected.map(v=>'<p>&bull; <strong>'+esc(v.std)+': '+esc(v.title)+'</strong> -- '+esc(v.desc)+'</p>').join(''):'') +
 
     '<h3>IV. Pattern Across Multiple Students</h3>' +
-    '<p>Our account is consistent with formal complaints independently filed by multiple other BWHS track families. The Clow family submitted a written complaint to the district on January 28, 2026. The district has failed to take substantive corrective action. This conduct is systemic, not situational. We are aware of multiple students who have left the BWHS track program citing Coach Parish\'s behavior, and of additional families who have spoken with us privately but fear retaliation if they come forward. The fear of retaliation is itself evidence of the culture Coach Parish has created.</p>' +
+    '<p>'+OurAcct+' account is consistent with formal complaints independently filed by multiple other BWHS track families. The Clow family submitted a written complaint to the district on January 28, 2026. The district has failed to take substantive corrective action. This conduct is systemic, not situational. We are aware of multiple students who have left the BWHS track program citing Coach Parish\'s behavior, and of additional families who have spoken with us privately but fear retaliation if they come forward. The fear of retaliation is itself evidence of the culture Coach Parish has created.</p>' +
 
-    '<h3>V. Impact on Our Student</h3>' +
+    '<h3>V. '+(student?'Impact on Me':'Impact on Our Student')+'</h3>' +
     '<p>'+nl(imp)+'</p>' +
     therapyLine +
 
-    (hasPrior&&priort?'<h3>VI. Prior Attempts to Resolve</h3><p>'+nl(priort)+'</p><p>Despite these prior attempts, no substantive corrective action has been taken. The administration\'s failure to act is why we are now escalating to the full School Board and concurrent regulatory bodies.</p>':'') +
+    (hasPrior&&priort?'<h3>VI. Prior Attempts to Resolve</h3><p>'+nl(priort)+'</p><p>Despite these prior attempts, no substantive corrective action has been taken. The administration\'s failure to act is why '+(student?'I am':'we are')+' now escalating to the full School Board and concurrent regulatory bodies.</p>':'') +
 
     '<h3>Requested Actions</h3>' +
-    '<p>We respectfully but firmly request:</p>' +
+    '<p>'+(student?'I':'We')+' respectfully but firmly request:</p>' +
     '<ol>' +
       '<li><strong>Immediate removal of Coach Parish from his coaching position</strong> pending the outcome of a formal investigation. His continued presence harms current athletes and signals that the administration condones this conduct.</li>' +
       '<li><strong>A formal written investigation</strong> completed within five (5) school days, consistent with the district\'s legal obligations under Ark. Code Ann. &sect; 6-18-514.</li>' +
       '<li><strong>A formal written finding</strong> provided to us in writing upon completion of the investigation.</li>' +
       '<li><strong>Interviews with witnesses</strong> to the incidents described above, including all individuals named as present.</li>' +
       '<li><strong>Review of all written communications</strong> between Coach Parish and any college coaches relating to BWHS athletes, pursuant to Arkansas FOIA.</li>' +
-      '<li><strong>Assurance of no retaliation</strong> against our student or any other athlete whose family participates in this process. Any retaliation will be reported immediately to federal OCR as a Title IX violation.</li>' +
+      '<li><strong>Assurance of no retaliation</strong> against '+ourStudent+' or any other athlete who participates in this process or whose family does. Any retaliation will be reported immediately to federal OCR as a Title IX violation.</li>' +
       '<li><strong>Referral of this matter</strong> to the Arkansas Professional Licensure Standards Board.</li>' +
     '</ol>' +
 
@@ -730,7 +813,7 @@ function generate() {
     '<p>This complaint is being filed simultaneously with '+concurrentD+'. We are also consulting with legal counsel regarding all available civil remedies.</p>' +
 
     '<h3>Notice of Legal Representation and Coordinated Action</h3>' +
-    '<p>This complaint is one of multiple formal complaints being filed simultaneously by separate families who have experienced the same pattern of conduct by Coach Parish. These families are filing independently and on their own initiative -- this is the natural result of a coaching environment that has harmed multiple students over multiple years, not a coordinated campaign. All filing families are either currently represented by legal counsel or are prepared to retain legal counsel immediately. Any retaliatory action against any student whose family has participated in this complaint process -- or against any student whose family is known to be considering participation -- will be pursued as a Title IX retaliation claim in federal court in addition to all available state remedies.</p>' +
+    '<p>This complaint is one of multiple formal complaints being filed by separate families and directly affected student-athletes who have experienced the same pattern of conduct by Coach Parish. Each is filing independently and on their own initiative -- this is the natural result of a coaching environment that has harmed multiple students over multiple years, not a coordinated campaign. All filing families are either currently represented by legal counsel or are prepared to retain legal counsel immediately. Any retaliatory action against any student whose family has participated in this complaint process -- or against any student whose family is known to be considering participation -- will be pursued as a Title IX retaliation claim in federal court in addition to all available state remedies.</p>' +
 
     '<h3>Notice of Escalation -- District Failure to Act</h3>' +
     '<p>We are providing formal written notice of the steps we will take if the district fails to respond substantively within the legal timeframes required by Arkansas law.</p>' +
@@ -739,11 +822,11 @@ function generate() {
       '<li><strong>Arkansas Division of Elementary and Secondary Education (DESE)</strong> -- We will file a complaint with the DESE Compliance Assistance Center (Dr. Jeanie Johnson, Jeanie.Johnson@ade.arkansas.gov, (501) 682-4213) for the district\'s failure to comply with mandatory bullying investigation requirements.</li>' +
       '<li><strong>U.S. Department of Education, Office for Civil Rights (OCR)</strong> -- We will file a federal Title IX complaint for the hostile environment created by Coach Parish and the district\'s failure to address it. This filing will be made within the 180-day window from the incidents described above.</li>' +
       '<li><strong>Arkansas Activities Association (AAA)</strong> -- We will request that the appropriate athletic director file a formal complaint with the AAA regarding competition-related violations. Contact: Lance Taylor, lance@ahsaa.org, (501) 955-2500.</li>' +
-      '<li><strong>Arkansas Child Abuse Hotline</strong> -- To the extent that our student\'s behavioral and psychological functioning has been observably and substantially impaired as a result of this treatment, we will contact the Arkansas Child Abuse Hotline (1-800-482-5964). A substantiated DHS finding independently disqualifies an educator from licensure under Ark. Code Ann. &sect; 6-17-410.</li>' +
-      '<li><strong>Civil litigation</strong> -- We will pursue all available civil remedies through legal counsel, including claims arising from the emotional harm sustained by our student as a result of Coach Parish\'s sustained misconduct.</li>' +
+      '<li><strong>Arkansas Child Abuse Hotline</strong> -- To the extent that '+ourStudentPoss+' behavioral and psychological functioning has been observably and substantially impaired as a result of this treatment, the Arkansas Child Abuse Hotline (1-800-482-5964) will be contacted. A substantiated DHS finding independently disqualifies an educator from licensure under Ark. Code Ann. &sect; 6-17-410.</li>' +
+      '<li><strong>Civil litigation</strong> -- All available civil remedies will be pursued through legal counsel, including claims arising from the emotional harm sustained by '+ourStudent+' as a result of Coach Parish\'s sustained misconduct.</li>' +
       '<li><strong>Public records and media</strong> -- All FOIA responses and investigation records obtained through our concurrent records request will be made available to the public and to local and regional media outlets covering education and athletics.</li>' +
     '</ol>' +
-    '<p>We are not filing this complaint to threaten the district. We are filing it because the conduct described here is serious, documented, and has harmed our student and others. We expect the district to act in accordance with its legal obligations and its duty to protect the students in its care.</p>' +
+    '<p>'+(student?'I am':'We are')+' not filing this complaint to threaten the district. '+(student?'I am':'We are')+' filing it because the conduct described here is serious, documented, and has harmed '+ourStudent+' and others. '+(student?'I':'We')+' expect the district to act in accordance with its legal obligations and its duty to protect the students in its care.</p>' +
     sig;
 
   // ── PLSB COMPLAINT ────────────────────────────────────────────
@@ -760,7 +843,7 @@ function generate() {
     '<strong>Address:</strong> '+esc(addr)+'<br>' +
     '<strong>Phone:</strong> '+esc(p1ph)+(p2ph?' | '+esc(p2ph):'')+'<br>' +
     '<strong>Email:</strong> '+esc(p1em)+(p2em?' | '+esc(p2em):'')+'<br>' +
-    '<strong>Relationship to Student:</strong> Parent(s) / Guardian(s)</p>' +
+    '<strong>Relationship to Student:</strong> '+(student?('Self -- I am the directly affected student-athlete'+(minor&&cgn?' (co-signed by parent/guardian '+esc(cgn)+')':'')):'Parent(s) / Guardian(s)')+'</p>' +
 
     '<h3>II. Respondent Information</h3>' +
     '<p><strong>Name:</strong> Benjamin J. Parish ("BJ Parish")<br>' +
@@ -773,8 +856,10 @@ function generate() {
     '<strong>Education:</strong> Arkansas State University, Physical Education, 2003-2008</p>' +
 
     '<h3>III. Introduction</h3>' +
-    '<p>We are the parents of '+esc(sn)+', a '+esc(sy.toLowerCase())+' athlete'+( sev?' competing in '+esc(sev):'')+' at Bentonville West High School.'+(sacc?' '+esc(sacc)+'.':'')+' We are filing this complaint to request a formal investigation of Coach Parish\'s conduct under Standards 1, 2, and 3 of the Arkansas Code of Ethics for Educators (ADE Rule 005.16)'+(detected.some(v=>v.id==='std5_pay')?' and Standard 5 (private compensation/conflict of interest)':'')+'.</p>' +
-    '<p>We have '+(hasPrior?'previously raised these concerns with the school district and received no substantive corrective action. We are therefore bringing this matter before the PLSB for independent review':'not received substantive engagement from the school district on these concerns and are filing with the PLSB to ensure independent review')+'.</p>' +
+    (student
+      ? '<p>I am '+esc(sn)+', a '+esc(sy.toLowerCase())+' athlete'+( sev?' competing in '+esc(sev):'')+' at Bentonville West High School, and I experienced the conduct described in this complaint directly.'+(sacc?' '+esc(sacc)+'.':'')+' I am filing this complaint to request a formal investigation of Coach Parish\'s conduct under Standards 1, 2, and 3 of the Arkansas Code of Ethics for Educators (ADE Rule 005.16)'+(detected.some(v=>v.id==='std5_pay')?' and Standard 5 (private compensation/conflict of interest)':'')+'.'+(minor&&cgn?' Because I am under 18, this complaint is co-signed by my parent/guardian, '+esc(cgn)+'.':'')+'</p>'
+      : '<p>We are the parents of '+esc(sn)+', a '+esc(sy.toLowerCase())+' athlete'+( sev?' competing in '+esc(sev):'')+' at Bentonville West High School.'+(sacc?' '+esc(sacc)+'.':'')+' We are filing this complaint to request a formal investigation of Coach Parish\'s conduct under Standards 1, 2, and 3 of the Arkansas Code of Ethics for Educators (ADE Rule 005.16)'+(detected.some(v=>v.id==='std5_pay')?' and Standard 5 (private compensation/conflict of interest)':'')+'.</p>') +
+    '<p>'+(student?'I have ':'We have ')+(hasPrior?'previously raised these concerns with the school district and received no substantive corrective action. '+(student?'I am':'We are')+' therefore bringing this matter before the PLSB for independent review':'not received substantive engagement from the school district on these concerns and '+(student?'am':'are')+' filing with the PLSB to ensure independent review')+'.</p>' +
 
     '<h3>IV. Statement of Facts</h3>' +
     '<p>Coach Parish has engaged in a sustained pattern of conduct that violates the Arkansas Code of Ethics for Educators, causing measurable harm to '+esc(sn)+' and to other student-athletes under his supervision.</p>' +
@@ -797,7 +882,7 @@ function generate() {
     swHTML +
 
     '<h3>Requested Action</h3>' +
-    '<p>We respectfully request that the Ethics Subcommittee:</p>' +
+    '<p>'+(student?'I':'We')+' respectfully request that the Ethics Subcommittee:</p>' +
     '<ol>' +
       '<li>Authorize a formal investigation of Coach Parish\'s conduct under Standards 1, 2, and 3'+(detected.some(v=>v.id==='std5_pay')?' and Standard 5':'')+' of the Arkansas Code of Ethics for Educators (ADE Rule 005.16);</li>' +
       '<li>Consider suspension or revocation of Coach Parish\'s Arkansas educator license based on the sustained pattern of violations described in this complaint; and</li>' +
@@ -806,6 +891,7 @@ function generate() {
 
     '<h3>Certification</h3>' +
     '<p><strong>I certify under penalty of perjury that the information provided in this complaint is true and correct to the best of my knowledge and belief. I understand that filing a false complaint is a criminal offense.</strong></p>' +
+    (minor&&cgn?'<p><em>As the parent/guardian of the student complainant, I have reviewed this complaint with my student and co-sign its filing.</em></p>':'') +
     sig +
     '<hr>' +
     '<p style="font-size:11px;color:#666"><em>Filed simultaneously with the Bentonville School District administration and Board of Education'+(detected.some(v=>v.id==='std5_pay')?', the Arkansas Ethics Commission':'')+( detected.some(v=>v.id==='titleix')?', and the U.S. Department of Education Office for Civil Rights':'')+'.</em></p>';
@@ -871,9 +957,21 @@ wireToggle('outside','outside-d');
 wireToggle('college','college-d');
 wireToggle('therapy','therapy-d');
 wireToggle('prior','prior-d');
+document.querySelectorAll('input[name="filer"]').forEach(el=>el.addEventListener('change',()=>{applyFilerMode();refreshIncLabels();}));
+document.querySelectorAll('input[name="adult"]').forEach(el=>el.addEventListener('change',applyFilerMode));
+
+function refreshIncLabels(){
+  const s=isStudent();
+  document.querySelectorAll('.inc-imp-label').forEach(el=>{
+    el.innerHTML = s
+      ? 'Immediate impact on you <span class="opt">(your reaction during or right after this incident)</span>'
+      : 'Immediate impact on student <span class="opt">(your student\'s reaction during or right after this incident)</span>';
+  });
+}
 
 // init
 addInc();
+applyFilerMode();
 </script>
 </body>
 </html>
