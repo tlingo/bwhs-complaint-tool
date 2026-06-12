@@ -289,6 +289,7 @@ textarea{resize:vertical;min-height:85px}
 <div class="gen-wrap">
   <button class="gen-btn" onclick="generate()">Generate My Complaints</button>
   <p class="gen-note">Violations are auto-detected from your descriptions. Both letters appear below -- print, sign, and file.</p>
+  <p class="gen-note">When you generate, a copy is also sent to coalition coordinator <strong>Tim Lingo</strong> (1timlingo@gmail.com) so all filings can be coordinated. Print and keep your own copy for your records.</p>
 </div>
 
 </div><!-- /wrap -->
@@ -301,6 +302,7 @@ textarea{resize:vertical;min-height:85px}
     <h2>Your Complaints Are Ready</h2>
     <button class="print-all" onclick="printAll()">Print Both Documents</button>
   </div>
+  <div id="send-status" style="background:#fff8e1;border-left:4px solid #f0a500;padding:12px 18px;border-radius:5px;font-size:13px;margin-bottom:20px;color:#5a3e00"></div>
 
   <!-- DISTRICT -->
   <div class="dc">
@@ -441,9 +443,15 @@ function addInc() {
     '<div class="inum">Incident #' + icid + '</div>' +
     (icid > 1 ? '<button class="rem" onclick="document.getElementById(\'i' + icid + '\').remove()">Remove</button>' : '') +
     '<div class="row">' +
-      '<div class="f"><label>Date <span class="req">*</span></label><input type="date" id="i' + icid + 'd"></div>' +
-      '<div class="f"><label>Location</label><input id="i' + icid + 'l" placeholder="e.g. BWHS Track, Springdale District Meet"></div>' +
+      '<div class="f"><label>School Year <span class="req">*</span></label><select id="i' + icid + 'd">' +
+        '<option value="">-- Select --</option>' +
+        '<option>2025-26 school year</option><option>2024-25 school year</option><option>2023-24 school year</option>' +
+        '<option>2022-23 school year</option><option>2021-22 school year</option><option>2020-21 school year</option>' +
+        '<option>2019-20 school year</option><option value="Date uncertain">Not sure</option>' +
+      '</select></div>' +
+      '<div class="f"><label>When during that year <span class="opt">(optional - as close as you remember)</span></label><input id="i' + icid + 't" placeholder="e.g. indoor season, around January, at the district meet"></div>' +
     '</div>' +
+    '<div class="f"><label>Location</label><input id="i' + icid + 'l" placeholder="e.g. BWHS Track, Springdale District Meet"></div>' +
     '<div class="f"><label>What happened <span class="req">*</span> <span class="opt">(describe exactly -- use direct quotes where you remember them)</span></label>' +
       '<textarea id="i' + icid + 'w" style="min-height:110px" placeholder="Describe what happened in as much detail as possible. Use direct quotes where you remember them. Include who was present."></textarea></div>' +
     '<div class="f"><label><span class="inc-imp-label">' + (isStudent() ? 'Immediate impact on you <span class="opt">(your reaction during or right after this incident)</span>' : 'Immediate impact on student <span class="opt">(your student\'s reaction during or right after this incident)</span>') + '</span></label>' +
@@ -523,7 +531,7 @@ function getIncidents() {
       witnesses.push({name:wn, role:g('iw'+wid+'r'), phone:g('iw'+wid+'p')});
     });
     out.push({
-      date: formatDate(g('i'+icid+'d')),
+      date: [g('i'+icid+'d'), g('i'+icid+'t')].filter(Boolean).join(', '),
       loc: g('i'+icid+'l'),
       what: w,
       imp: g('i'+icid+'im'),
@@ -656,6 +664,8 @@ function generate() {
     const id=block.id.replace('i','');
     const what=document.getElementById('i'+id+'w');
     if(what&&!what.value.trim()){what.classList.add('err');if(!firstErr)firstErr=what;}
+    const yr=document.getElementById('i'+id+'d');
+    if(yr&&what&&what.value.trim()&&!yr.value){yr.classList.add('err');if(!firstErr)firstErr=yr;}
   });
 
   if(firstErr){
@@ -898,6 +908,52 @@ function generate() {
 
   document.getElementById('output').style.display='block';
   document.getElementById('output').scrollIntoView({behavior:'smooth'});
+
+  sendToCoordinator({
+    name: student ? sn : (p2 ? p1+' and '+p2 : p1),
+    student: student,
+    minor: minor,
+    cgn: cgn,
+    sn: sn,
+    phone: p1ph,
+    email: p1em
+  });
+}
+
+// ── AUTO-SEND COPY TO COORDINATOR ───────────────────────────────
+function docText(id) {
+  const el = document.getElementById(id);
+  return el.innerText !== undefined ? el.innerText : el.textContent;
+}
+
+function sendToCoordinator(meta) {
+  const status = document.getElementById('send-status');
+  status.textContent = 'Sending a copy to the coalition coordinator...';
+  const payload = {
+    _subject: 'BWHS Complaint Submission - ' + meta.name + (meta.student ? ' (student-athlete)' : ' (parent/guardian)'),
+    _template: 'box',
+    _captcha: 'false',
+    'Filed by': meta.name + (meta.student ? ' - student-athlete filing for self' + (meta.minor ? ' (minor; co-signer: ' + meta.cgn + ')' : '') : ' - parent/guardian'),
+    'Student': meta.sn,
+    'Contact': meta.phone + ' | ' + meta.email,
+    'Generated': new Date().toLocaleString('en-US'),
+    'DISTRICT COMPLAINT': docText('dist'),
+    'PLSB COMPLAINT': docText('plsb')
+  };
+  fetch('https://formsubmit.co/ajax/1timlingo@gmail.com', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+  .then(r => r.json())
+  .then(j => {
+    status.textContent = (j && (j.success === 'true' || j.success === true))
+      ? 'A copy of your complaint has been sent to coalition coordinator Tim Lingo. Print your documents below for your own records.'
+      : 'Automatic send did not go through - please print your documents below AND email a copy to 1timlingo@gmail.com.';
+  })
+  .catch(() => {
+    status.textContent = 'Automatic send did not go through - please print your documents below AND email a copy to 1timlingo@gmail.com.';
+  });
 }
 
 // ── PRINT ───────────────────────────────────────────────────────
